@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="EN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>HTML Quiz</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <section class="start">
+        <h1>Welcome to this HTML Quiz</h1>
+        <h2>The Test</h2>
+        <p>The test contains 7 questions and there is no time limit.</p>
+
+        <p>The test is not official, it's just a nice way to see how much you know, or don't know, about HTML.</p>
+        <h2>Count Your Score</h2>
+        You will get 1 point for each correct answer. At the end of the Quiz, your total score will be displayed. 75% is required to pass.</p>
+        <hr />
+        <section class="buttons center">
+            <button id="btnStart" class="button blue center">Start Quiz</button>
+        </section>
+    </section>
+    <section class="quiz" style="display:block">
+        <header>
+            <div class="quizheader" id="questionnumber"></div><div id="score"></div>
+        </header>
+        <section class="questions" id="question">
+            <form>
+                <fieldset>
+                    <label>HTML Document can contain ______________.</label>
+                    <br />
+                    <br />
+                    <input type='radio' id='cbxa01' name='answers' value="1" />
+                    <label id='cbxa1' for='cbxa01'>Attributes</label><br />
+                    <input type='radio' id='cbxa01' name='answers' value="2" />
+                    <label id='cbxa1' for='cbxa01'>Tags</label><br />
+                    <input type='radio' id='cbxa01' name='answers' value="3" />
+                    <label id='cbxa1' for='cbxa01'>Plain Text</label><br />
+                    <input type='radio' id='cbxa01' name='answers' value="4" />
+                    <label id='cbxa1' for='cbxa01'>All of These</label><br />
+
+                </fieldset>
+            </form>
+        </section>
+        <hr />
+        <section class="buttons center">
+            <button id="btnNext" class="button blue">Submit</button>
+            <button id="btnFinish" class="button green">Finish Quiz</button>
+        </section>
+    </section>
+    <section class="final" style="display:block">
+        <h2 id="lblMessageHeader">Congratulations</h2>
+        <h3 id="lblMessageContent">You have passed the quiz</h3>
+        <br />
+        <p id="lblScore">Your score is: 75/100</p>
+        <p id="lblCorrectAns">
+            Correct Answers:<br/>
+            <br/>
+            HTML Document can contain ______________.<br/>
+            All of These
+        </p>
+        <hr />
+        <section class="buttons center">
+            <button id="btnRestart" class="button red center">Restart Quiz</button>
+        </section>
+    </section>
+</body>
+</html>

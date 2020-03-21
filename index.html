@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="EN">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
@@ -14,7 +14,7 @@
 
         <p>The test is not official, it's just a nice way to see how much you know, or don't know, about HTML.</p>
         <h2>Count Your Score</h2>
-        You will get 1 point for each correct answer. At the end of the Quiz, your total score will be displayed. 75% is required to pass.</p>
+        <p>You will get 1 point for each correct answer. At the end of the Quiz, your total score will be displayed. 75% is required to pass.</p>
         <hr />
         <section class="buttons center">
             <button id="btnStart" class="button blue center">Start Quiz</button>
@@ -25,11 +25,21 @@
         <header>
             <div class="quizheader" id="questionnumber"></div><div id="score"></div>
         </header>
-        <section class="questions" id="question"></section>
+        <section class="questions" id="question">
+            <br />
+            
+        </section>
+        
         <hr />
+        <section class="message">
+            <label class="lblmsg center" id="lblmsg"></label>
+        </section>
         <section class="buttons center">
-            <button id="btnNext" class="button blue">Submit</button>
+
+            <button id="btnSubmit" class="button blue">Submit</button>
+            <button id="btnNext" class="button blue">Next</button>
             <button id="btnFinish" class="button green">Finish Quiz</button>
+            
         </section>
     </section>
 
@@ -45,8 +55,7 @@
         </section>
     </section>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="script.js"></script>
 </body>
 </html>

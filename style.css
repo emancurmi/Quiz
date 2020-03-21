@@ -54,7 +54,7 @@ hr {
     margin-bottom: 50px;
 }
 
-.start, .final {
+.start, .message .final {
     background-color: #eeeeee;
     padding: 20px;
     border-radius: 25px;
