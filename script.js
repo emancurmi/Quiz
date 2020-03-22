@@ -83,18 +83,22 @@ function loadQuestion() {
 }
 
 function checkUserAns(uservalue) {
-    var correct = false;
+    var correct;
     let value = -1;
 
     $("input:radio[name='answers']:checked").each(function () {
-        let value = $(this).attr("value");
+        value = $(this).attr("value");
 
         if (value == questions[questionno].correct) {
+            
             correct = true;
         }
         else {
             correct = false;
         }
+
+        useranswers[questionno] = value;
+
     });
 
     return correct;
@@ -137,7 +141,12 @@ function submitAns() {
 
     var msg = "";
 
-    if ([questionno] == undefined) {
+    if (checkUserAns() == undefined) {
+        msg = "Please Select an Answer";
+        $('#lblmsg').html(msg)
+        $('#lblmsg').css('color', 'red');
+    }
+    else {
         if (checkUserAns() == true) {
             msg = "Well Done!";
             $('#lblmsg').html(msg)
@@ -149,9 +158,10 @@ function submitAns() {
             $('#lblmsg').css('color', 'red');
         }
 
+        updateScore();
         questionno += 1;
 
-        if (questionno < questions.length - 1) {
+        if (questionno < questions.length) {
             $('#btnSubmit').hide();
             $('#btnNext').show();
             $('#btnFinish').hide();
@@ -162,24 +172,16 @@ function submitAns() {
             $('#btnFinish').show();
         }
     }
-    else {
-
-        msg = "Please Select an Answer";
-        $('#lblmsg').html(msg)
-        $('#lblmsg').css('color', 'red');
-    }
 }
+    
 
 function nextQuestion() {
-    questionno += 1;
     renderScoreBoard();
     renderQuestion();
 }
 
 function finishQuiz() {
-    checkUserAns();
-
-    let score = ((correct / questions.length) * 100).toPrecision(2)
+    let score = ((correct / questions.length) * 100).toFixed(0);
     if (score >= 75) {
         //pass
         $('#lblMessageHeader').text("Congratulations!");
