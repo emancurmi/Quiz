@@ -38,11 +38,13 @@ const questions = [
     }
 ];
 
-let correct = 0;
-let incorrect = 0;
-let questionno = 0;
-let useranswers = new Array(questions.length);
-
+let STORE = {
+    correct : 0,
+    incorrect : 0,
+    questionno : 0,
+    useranswers : new Array(questions.length),
+    msg : ""
+};
 
 function startQuiz() {
 
@@ -55,8 +57,8 @@ function startQuiz() {
 }
 
 function renderScoreBoard() {
-    $('#questionnumber').text("Question number: " + (questionno + 1) + " out of " + questions.length);
-    $('#score').text(" Correct: " + correct + " / Incorrect: " + incorrect);
+    $('#questionnumber').text("Question number: " + (STORE.questionno + 1) + " out of " + questions.length);
+    $('#score').text(" Correct: " + STORE.correct + " / Incorrect: " + STORE.incorrect);
 }
 
 function renderQuestion() {
@@ -70,11 +72,11 @@ function renderQuestion() {
 function loadQuestion() {
     let formMaker = "";
     formMaker += "<form><fieldset>";
-    formMaker += "<label>" + questions[questionno].question + "</label><br/><br/>";
+    formMaker += "<label>" + questions[STORE.questionno].question + "</label><br/><br/>";
 
     for (let i = 0; i < 4; i++) {
-        formMaker += "<input type='radio' id='cbxa" + questionno + i + "' name='answers' value=" + i + " />";
-        formMaker += "<label id='cbxa" + i + "' for='cbxa" + i + "'>" + questions[questionno].answer[i] + "</label><br/>";
+        formMaker += "<input type='radio' id='cbxa" + i + "' class='radio' name='answers' value=" + i + " />";
+        formMaker += "<label id='cbxa" + i + "' for='cbxa" + i + "'>" + questions[STORE.questionno].answer[i] + "</label><br/>";
     }
 
     formMaker += "</fieldset></form>";
@@ -82,42 +84,32 @@ function loadQuestion() {
     return formMaker;
 }
 
-function checkUserAns(uservalue) {
-    var correct;
+function checkUserAns() {
     let value = -1;
-
+    let correct;
     $("input:radio[name='answers']:checked").each(function () {
         value = $(this).attr("value");
-
-        if (value == questions[questionno].correct) {
-            
-            correct = true;
-        }
-        else {
-            correct = false;
-        }
-
-        useranswers[questionno] = value;
-
+        STORE.useranswers[STORE.questionno] = value;
+        correct = (value == questions[STORE.questionno].correct) ? true : false;
     });
 
     return correct;
 }
 
 function updateScore() {
-    if (useranswers[questionno] == questions[questionno].correct) {
-        correct += 1;
+    if (STORE.useranswers[STORE.questionno] == questions[STORE.questionno].correct) {
+        STORE.correct += 1;
     }
     else {
-        incorrect += 1;
+        STORE.incorrect += 1;
     }
 }
 
 function renderFinish() {
 
     let listmaker = "<h4>Study Section</h4><ul>";
-    for (let i = 0; i < useranswers.length; i++) {
-        if (useranswers[i] != questions[i].correct) {
+    for (let i = 0; i < STORE.useranswers.length; i++) {
+        if (STORE.useranswers[i] != questions[i].correct) {
             listmaker += "<li>" + questions[i].question + "<br/>" + questions[i].answer[questions[i].correct] + "</li>";
         }
     }
@@ -125,12 +117,13 @@ function renderFinish() {
     return listmaker;
 }
 
-function start() {
+function start(){
 
-    correct = 0;
-    incorrect = 0;
-    questionno = 0;
-    useranswers = new Array(questions.length);
+    STORE.correct = 0;
+    STORE.incorrect = 0;
+    STORE.questionno = 0;
+    STORE.useranswers = new Array(questions.length);
+    STORE.msg = "";
 
     $('.start').show();
     $('.quiz').hide();
@@ -139,29 +132,31 @@ function start() {
 
 function submitAns() {
 
-    var msg = "";
-
     if (checkUserAns() == undefined) {
-        msg = "Please Select an Answer";
-        $('#lblmsg').html(msg)
+        STORE.msg = "Please Select an Answer";
+        $('#lblmsg').html(STORE.msg)
         $('#lblmsg').css('color', 'red');
     }
     else {
+        
         if (checkUserAns() == true) {
-            msg = "Well Done!";
-            $('#lblmsg').html(msg)
+            STORE.msg = "Well Done!";
+            $('#lblmsg').html(STORE.msg)
             $('#lblmsg').css('color', 'green');
         }
         else {
-            msg = "Sorry the Correct Answer is :" + questions[questionno].answer[questions[questionno].correct];
-            $('#lblmsg').html(msg)
+            STORE.msg = "Sorry the Correct Answer is :" + questions[STORE.questionno].answer[questions[STORE.questionno].correct];
+            $('#lblmsg').html(STORE.msg)
             $('#lblmsg').css('color', 'red');
         }
 
-        updateScore();
-        questionno += 1;
+        $(".radio").attr('disabled', true);
 
-        if (questionno < questions.length) {
+        updateScore();
+        renderScoreBoard();
+        STORE.questionno += 1;
+
+        if (STORE.questionno < questions.length) {
             $('#btnSubmit').hide();
             $('#btnNext').show();
             $('#btnFinish').hide();
@@ -176,12 +171,12 @@ function submitAns() {
     
 
 function nextQuestion() {
-    renderScoreBoard();
+    
     renderQuestion();
 }
 
 function finishQuiz() {
-    let score = ((correct / questions.length) * 100).toFixed(0);
+    let score = ((STORE.correct / questions.length) * 100).toFixed(0);
     if (score >= 75) {
         //pass
         $('#lblMessageHeader').text("Congratulations!");
@@ -208,7 +203,7 @@ $('#btnFinish').click(function (event) { finishQuiz(); });
 $('#btnStart').click(function (event) { startQuiz(); });
 $('#btnRestart').click(function (event) { start(); });
 
-$(start());
+$(start);
 
 
 
